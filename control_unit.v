@@ -18,7 +18,7 @@ module control_unit(
                     output reg lui_control          //control signal for enabling lui operation
                    );
  
- ////////////////////////////////////////// Logic for reset operation ///////////////////////////////////////////////////////////////////////
+// Logic for reset operation 
     
         always@(reset)
             begin
@@ -26,11 +26,10 @@ module control_unit(
                     alu_control = 0;
             end
 
-///////////////////////////////////////////Logic for analyzing the type of the instruction /////////////////////////////////////////////////////////
+//Logic for analyzing the type of the instruction 
         always@(funct7 or funct3 or opcode  )
             begin
-///////////////////////////////////////////// R - TYPE INSTRUCTIONS //////////////////////////////////////////////////////////////////////////////          
-             
+// R - TYPE INSTRUCTIONS 
                 if(opcode == 7'b0110011)
                     begin
                     mem_to_reg = 0;
@@ -45,19 +44,19 @@ module control_unit(
                     3'b000:
                         begin
                         
-//////////////////////////////////////////// ADDITION /////////////////////////////////////////////////////////////////////////////////////////                        
+// ADDITION                       
                           
                             if(funct7 == 0)
                                 alu_control = 6'b000001;
                                                      
-//////////////////////////////////////////// SUBRACTION /////////////////////////////////////////////////////////////////////////////////////////                        
+// SUBRACTION                         
                        
                             else if(funct7 == 64)
                                 alu_control = 6'b000010; 
                         end
                         
 
-//////////////////////////////////////////// SHIFT LEFT LOGICAL /////////////////////////////////////////////////////////////////////////////////////////                        
+// SHIFT LEFT LOGICAL                         
 
                     3'b001 :
                           begin
@@ -65,7 +64,7 @@ module control_unit(
                                 alu_control = 6'b000011;                           
                            end
                            
-//////////////////////////////////////////// SET LESS THAN /////////////////////////////////////////////////////////////////////////////////////////                        
+// SET LESS THAN                         
 
                       3'b010 :
                          begin
@@ -73,7 +72,7 @@ module control_unit(
                                   alu_control = 6'b000100; 
                            end
                             
-//////////////////////////////////////////// SET LESS THAN UNSIGNED /////////////////////////////////////////////////////////////////////////////////////////                        
+// SET LESS THAN UNSIGNED                         
                            
                        3'b011 :
                             begin
@@ -81,7 +80,7 @@ module control_unit(
                                     alu_control = 6'b000101; 
                              end
                              
-//////////////////////////////////////////// XOR OPERATION /////////////////////////////////////////////////////////////////////////////////////////                        
+// XOR OPERATION                         
                              
                        3'b100 :
                             begin
@@ -89,7 +88,7 @@ module control_unit(
                                     alu_control = 6'b000110; 
                                 end
 
-//////////////////////////////////////////// SHIFT RIGHT LOGICAL AND ARTHIMETIC /////////////////////////////////////////////////////////////////////////////////////////                        
+// SHIFT RIGHT LOGICAL AND ARTHIMETIC                         
                        
                        3'b101 :
                             begin
@@ -101,7 +100,7 @@ module control_unit(
                              end
 
 
-////////////////////////////////////////////  OR OPERATION /////////////////////////////////////////////////////////////////////////////////////////                        
+//  OR OPERATION                         
 
                              
                       3'b110 :
@@ -111,7 +110,7 @@ module control_unit(
                              end
 
 
-//////////////////////////////////////////// AND OPERATION /////////////////////////////////////////////////////////////////////////////////////////                        
+// AND OPERATION                         
                                  
                       3'b111 :
                             begin
@@ -120,9 +119,9 @@ module control_unit(
                              end
                   endcase
                   end
-//////////////////////////////////////////// END OF R- TYPE INSTRUCTION /////////////////////////////////////////////////////////////////////////////////////////                        
+// END OF R- TYPE INSTRUCTION                         
 
-/////////////////////////////////////////// I - TYPE INSTRUCTION  ///////////////////////////////////////////////////////////////////////////////////////
+// I - TYPE INSTRUCTION  
                   
                   else if(opcode == 7'b001_0011)// I TYPE
                   begin
@@ -136,21 +135,21 @@ module control_unit(
                         
                        case(funct3)
                        
-///////////////////////////////////////////////// ADD IMMEDIATE  ///////////////////////////////////////////////////////////////////////////////////////
+// ADD IMMEDIATE  
 
                                 3'b000 :
                                         begin
                                             alu_control = 6'b001011; // add immediate
                                         end
 
-///////////////////////////////////////////////// SHIFT LEFT LOGICAL IMMEDIATE  ///////////////////////////////////////////////////////////////////////////////////////
+// SHIFT LEFT LOGICAL IMMEDIATE  
 
                                 3'b001 :
                                         begin
                                             alu_control = 6'b001100; // shift left logical immediate
                                         end
                                         
-///////////////////////////////////////////////// SHIFT LEFT LOGICAL IMMEDIATE  ///////////////////////////////////////////////////////////////////////////////////////
+// SHIFT LEFT LOGICAL IMMEDIATE  
                                         
                                 3'b010  :
                                         begin
